@@ -8,6 +8,7 @@ cmake learning marterial:
 	https://blog.csdn.net/u012150179/article/details/17852273
 	https://blog.csdn.net/hebbely/article/details/79169965
 	https://blog.csdn.net/wfei101/article/details/77150234
-
+linux learning marterial:
+	https://www.jianshu.com/p/b0bf2336a8c8
 
 
