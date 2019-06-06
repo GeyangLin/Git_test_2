@@ -3,6 +3,11 @@ Git learning material:
 	https://www.liaoxuefeng.com/wiki/896043488029600/896067008724000
 Vim learning material:
 	https://coolshell.cn/articles/5426.html
+cmake learning marterial:
+	https://www.cnblogs.com/cv-pr/p/6206921.html
+	https://blog.csdn.net/u012150179/article/details/17852273
+	https://blog.csdn.net/hebbely/article/details/79169965
+	https://blog.csdn.net/wfei101/article/details/77150234
 
 
 
