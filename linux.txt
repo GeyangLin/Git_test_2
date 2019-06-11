@@ -1,0 +1,125 @@
+the common linux order:
+
+1.find and grep
+
+  find:(用于在文件树种查找文件，并作出相应的处理,是从目标地址开始，递归的查到叶子节点为止OB )
+  	1.find . -atime/amin/cmin/ctime/mmin/mtime -2 (-2是是以内，+2是之前)
+	2.find . -name "*.log"  # key word
+	3.find . -perm 777
+	4.find . -type f -name "*.log" # file type(.txt .db ....)
+	5.find . -type d | sort  # find all the directory and sort
+	6.find . -size +1000c -print  #查找当前目录大于1K的文件 
+
+	7.find . -type f -exec ls -l {} \:
+	              -type f 后面什么都没有跟则是匹配到当前目录下的所有文件；-exec 后面接指令；{}是列出来的意思？
+		7.1 ：find . -type f -mtime +14 -exec rm {} \； (-mtime +14 是大于14天的意思)； 接着rm指令
+		7.2 ：find . -name "*.log" -mtime +5 -ok rm {} \;  find命令在当前目录中查找所有文件名以.log结尾、更改				时间在5日以上的文件，并删除它们，只不过在删除之前先给出提示。 按y键删除文件，按n键不删除
+		7.3 ：find /etc -name "passwd*" -exec grep "root" {}\；grep是匹配内容 看其中有没有“root”信息
+		7.4 ：find . -name "*.log" -exec mv {} ..\ ;查找文件移动到指定目录  
+		7.5 : find . -name "*.log" -exec cp {} test3 \ ;....复制到....
+
+	8.find -newer log2012.log ! -newer log2017.log：
+		如果希望查找更改时间比某个文件新但比另一个文件旧的所有文件，可以使用-newer选项。
+  	9.find / -name "CON.FILE" -depth -print  #关键字是depth  
+		它将首先匹配所有的文件然后再进入子目录中查找(尤其是当在使用find命令向磁带上备份文件系统时，希望首先备		      份所有的文件，其次再备份子目录中的文件)
+  
+  grep:(文本搜索，搜索内容而非名称)
+  	grep -n "*find" file  #example
+
+	^  #锚定行的开始 如：'^grep'匹配所有以grep开头的行。    
+
+	$  #锚定行的结束 如：'grep$'匹配所有以grep结尾的行。    
+
+	.  #匹配一个非换行符的字符 如：'gr.p'匹配gr后接一个任意字符，然后是p。    
+
+	*  #匹配零个或多个先前字符 如：'*grep'匹配所有一个或多个空格后紧跟grep的行。    
+
+	.*   #一起用代表任意字符。  
+  	
+
+
+	-a   --text   #不要忽略二进制的数据。   
+
+	-A<显示行数>   --after-context=<显示行数>   #除了显示符合范本样式的那一列之外，并显示该行之后的内容。   
+
+	-b   --byte-offset   #在显示符合样式的那一行之前，标示出该行第一个字符的编号。   
+
+	-B<显示行数>   --before-context=<显示行数>   #除了显示符合样式的那一行之外，并显示该行之前的内容。   
+
+	-c    --count   #计算符合样式的列数。   
+
+	-C<显示行数>    --context=<显示行数>或-<显示行数>   #除了显示符合样式的那一行之外，并显示该行之前后的内容。   	      
+	-n   --line-number   #在显示符合样式的那一行之前，标示出该行的列数编号
+	-V   --version   #显示版本信息
+	-l    --file-with-matches   #列出文件内容符合指定的样式的文件名称
+
+	
+	1. ps -ef|grep svn #查找指定进程
+	2. ps -ef|grep svn -c
+           ps -ef|grep -c svn #查找指定进程个数
+	
+	3. cat test.txt | grep -f test2.txt #important
+	4. cat test.txt | grep -nf test2.txt #从文件中读取关键词进行搜索 且显示行号
+	5. cat test.txt |grep -E "ed|at" #显示包含ed或者at字符的内容行
+	6. grep 'linux' test.txt  grep 'linux' test.txt test2.txt  #从文件中查找关键词
+	7. grep '[a-z]\{7\}' *.txt #
+
+  find grep 的组合使用：
+  	1. find ./ -name "*" -exec grep "string" {} \ #在当前目录下所有文件中查找内容包含 string 的文件
+	2. find ./ -name "*" -exec grep -l "string" {} \; 在当前目录下所有文件中查找内容包含 string 的文件并列出字符所		在的文件
+	3. find ./ -name "*.c" -exec grep -n "string" {} \ #
+		在当前目录下 *.c 中查找内容包含 string 的文件并列出字符所在的文件的所在行(不显示文件名)
+        4. find ./ -name "*" -exec grep -n "string" ./ {} \ #在当前目录下所有文件中查找内容包含 string 的文件并列出字			符所在的文件,所在行及所在行的内容
+
+
+2.linux files\folder:
+	
+	1.基本上，Linux系统上的文件名真的只是让你了解该文件可能的用途而已，真正的执行与否仍然需要权限的规范才行。例如虽然有一个文件为可执行文件，如常见的/bin/ls这个显示文件属性的指令，不过，如果这个文件的权限被修改成无法执行时，那么ls就变成不能执行。上述的这种问题最常发生在文件传送的过程中。例如你在网络上下载一个可执行文件，但是偏偏在你的 Linux系统中就是无法执行！呵呵！那么就是可能文件的属性被改变了。不要怀疑，从网络上传送到你的 Linux系统中，文件的属性与权限确实是会被改变的。
+	2.ls -lih 文件主要属性
+	第一列：inode（一种索引值）
+
+	第二列：文件种类和权限；
+
+	第三列： 硬链接个数；
+
+	第四列： 属主；(用户)
+
+	第五列：所归属的组；（文件属组）
+
+	第六列：文件或目录的大小；
+
+	第七列和第八列：最后访问或修改时间；
+
+	第九列：文件名或目录名	
+
+
+3.pwd: 
+	get the full Complete address
+4.rm:
+        rm file.txt
+	-f 
+	-r
+5.rmdir:
+        delete the empty folder
+6.cp
+
+7.mv 
+
+8.chmod: change the permission
+         777
+	 user、group、other
+	 r:4 w:2 x:1(execution)
+	 OA
+
+9.ls:
+       -l: Permission  （ls -l == ll）
+10.tar\gzip\compress\zip\unzip\rar
+
+11.wget:
+        download
+
+
+
+
+
+
