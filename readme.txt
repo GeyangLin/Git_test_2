@@ -20,3 +20,7 @@ here is master also ahead one step
 newbranch , conflict happening !!!
 
 fixed the bug
+newbranch
+ 
+newbranch is in the development
+
