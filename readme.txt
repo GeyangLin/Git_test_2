@@ -19,5 +19,3 @@ here is master also ahead one step
 
 newbranch , conflict happening !!!
 
-fixed the bug
-
